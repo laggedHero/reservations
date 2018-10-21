@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "net.laggedhero.reservations"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(':core')
+    implementation project(':persistence')
+    implementation project(':network')
+
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    implementation 'androidx.arch.core:core-runtime:2.0.1-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    implementation 'org.koin:koin-android:1.0.1'
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.22.0'
+
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0-beta02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-beta02'
+    androidTestImplementation('org.koin:koin-test:1.0.1') {
+        exclude group: 'org.mockito', module: 'mockito-inline'
+    }
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito-inline:2.19.1'
+}
