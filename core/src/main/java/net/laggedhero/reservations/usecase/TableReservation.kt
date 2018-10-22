@@ -18,7 +18,7 @@ class TableReservation(
         return localTableRepository.getAll()
             .flatMap {
                 if (it.isEmpty()) fetchAndFillCache()
-                else fetchAndMergeCache()
+                else Single.just(it)
             }
             .map { TableReservationState(it, false) }
             .onErrorResumeNext { _ ->
