@@ -48,10 +48,14 @@ class TableReservation(
     }
 
     fun reserve(table: Table): Completable {
-        return Single.just(table.copy(timestamp = timeProvider.currentTimeMillis()))
+        return Single.just(table)
             .flatMapCompletable {
                 if (!it.isAvailable) Completable.error(Throwable())
-                else localTableRepository.saveAll(listOf(it))
+                else localTableRepository.saveAll(
+                    listOf(
+                        it.copy(isAvailable = false, timestamp = timeProvider.currentTimeMillis())
+                    )
+                )
             }
     }
 
